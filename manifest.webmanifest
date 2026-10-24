@@ -1,0 +1,19 @@
+{
+  "name": "TWISTED \u2014 Choices, Mysteries & Mind Games",
+  "short_name": "TWISTED",
+  "description": "Make impossible choices, solve mysteries and test your mind.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0b13",
+  "theme_color": "#10101b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

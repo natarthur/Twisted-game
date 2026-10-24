@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10101b">
+  <meta name="description" content="TWISTED — Choices, mysteries and mind games. Challenge your thinking every day.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>TWISTED — Choices. Mysteries. Mind Games.</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0b13;--panel:#151522;--panel2:#1c1b2d;--line:#302e49;--text:#f7f5ff;--muted:#b6b3ca;--purple:#9c7bff;--cyan:#6ce7ef;--pink:#ff77b7;--green:#9ce8b0}
+    *{box-sizing:border-box} html{background:var(--bg)} body{margin:0;background:radial-gradient(ellipse at 80% -10%,#29204d 0,transparent 45%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    button{font:inherit;cursor:pointer;touch-action:manipulation} button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+    .app{width:min(100%,620px);margin:0 auto;padding:env(safe-area-inset-top) 16px calc(28px + env(safe-area-inset-bottom))}
+    header{display:flex;justify-content:space-between;align-items:center;padding:22px 2px 18px}
+    .brand{font-weight:950;letter-spacing:.17em;font-size:1.25rem}.brand span{color:var(--purple)} .tagline{font-size:.73rem;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+    .stats{display:flex;gap:8px}.pill{border:1px solid var(--line);background:#171625;border-radius:999px;padding:8px 10px;font-size:.78rem;white-space:nowrap}
+    .hero{padding:23px 20px 22px;border:1px solid #393257;border-radius:25px;background:linear-gradient(135deg,rgba(156,123,255,.19),rgba(108,231,239,.055) 65%),var(--panel);position:relative;overflow:hidden}
+    .eyebrow{color:var(--cyan);font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.hero h1{font-size:clamp(1.8rem,8vw,2.65rem);line-height:1.03;margin:12px 0 10px;letter-spacing:-.045em}.hero p{color:var(--muted);line-height:1.5;margin:0 0 19px;max-width:390px;font-size:.93rem}
+    .primary{background:linear-gradient(100deg,var(--purple),#7d8bff);border:0;color:#100d20;border-radius:14px;padding:14px 18px;font-weight:850;min-height:48px;width:100%}
+    .section-title{display:flex;justify-content:space-between;align-items:end;margin:25px 2px 12px}.section-title h2{font-size:1.08rem;margin:0}.section-title small{color:var(--muted)}
+    .modes{display:grid;gap:11px}.mode{display:flex;align-items:center;text-align:left;gap:14px;width:100%;border:1px solid var(--line);border-radius:19px;padding:15px;background:linear-gradient(110deg,var(--panel2),var(--panel));color:var(--text);min-height:91px}
+    .mode:active,.choice:active{transform:scale(.99)} .icon{width:49px;height:49px;display:grid;place-items:center;border-radius:15px;font-size:1.55rem;flex:0 0 auto}.choice-mode .icon{background:#38234a}.case-mode .icon{background:#163a43}.mind-mode .icon{background:#3a2b19}
+    .mode-copy{flex:1;min-width:0}.mode-copy strong{display:block;font-size:1rem;margin-bottom:4px}.mode-copy span{display:block;color:var(--muted);font-size:.81rem;line-height:1.35}.arrow{font-size:1.3rem;color:#aaa4c6}
+    .daily{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:16px;display:flex;gap:13px;align-items:center}.daily-icon{font-size:1.65rem}.daily p{margin:4px 0 0;color:var(--muted);font-size:.83rem}.daily button{border:1px solid var(--line);background:#24213a;color:var(--text);border-radius:12px;padding:10px 12px;font-weight:750;min-height:44px}
+    .ad-slot{margin:20px 0 8px;border:1px dashed #48445f;border-radius:12px;padding:12px;text-align:center;color:#8e8aa8;font-size:.72rem;letter-spacing:.06em;min-height:48px;display:grid;place-items:center}
+    .bottom{display:flex;justify-content:space-around;gap:8px;margin:20px 0 4px;padding-top:14px;border-top:1px solid #242236}.bottom button{background:none;border:0;color:var(--muted);padding:9px 7px;font-size:.77rem;min-height:44px}.bottom button.active{color:var(--cyan)}
+    .screen{display:none}.screen.active{display:block}.back{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 14px;border-radius:12px;min-height:44px;margin:4px 0 17px}
+    .game-card{border:1px solid var(--line);background:linear-gradient(150deg,#1c1a30,#12121d);border-radius:23px;padding:20px}.game-label{color:var(--cyan);font-size:.72rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase}.game-card h2{font-size:1.5rem;line-height:1.2;margin:12px 0}.game-card p{color:var(--muted);line-height:1.55}.choices{display:grid;gap:10px;margin-top:18px}.choice{width:100%;min-height:54px;border:1px solid #3b3858;background:#201e32;border-radius:15px;color:var(--text);text-align:left;padding:14px;line-height:1.35}.choice .letter{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#383050;color:#ddd2ff;font-weight:850;margin-right:9px}
+    .choice.selected{border-color:var(--cyan);background:#18313a}.feedback{border-radius:14px;padding:14px;margin-top:14px;line-height:1.5;background:#1c2930;border:1px solid #2d5960;color:#e7fcff}.feedback strong{display:block;margin-bottom:5px}.next{margin-top:14px}
+    .case-clues{padding-left:21px;color:#dedbed;line-height:1.65}.muted{color:var(--muted)}.result{text-align:center;padding:22px 12px}.result .big{font-size:3rem}.result h2{font-size:1.7rem;margin:10px 0}.result p{color:var(--muted);line-height:1.5}
+    .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}.mini{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}.mini b{font-size:1.35rem;display:block}.mini span{font-size:.78rem;color:var(--muted)}
+    .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#f4f1ff;color:#171323;padding:12px 16px;border-radius:13px;font-weight:700;box-shadow:0 8px 30px #0008;display:none;max-width:90%;z-index:9}
+    @media(min-width:540px){.app{padding-left:22px;padding-right:22px}.modes{grid-template-columns:1fr}.hero{padding:27px}}
+    @media(prefers-reduced-motion:no-preference){.mode,.choice{transition:transform .12s,border-color .15s,background .15s}.hero{animation:rise .35s ease-out}@keyframes rise{from{opacity:.7;transform:translateY(6px)}to{opacity:1;transform:none}}}
+  </style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <div><div class="brand">TWIST<span>ED</span></div><div class="tagline">Choices. Mysteries. Mind Games.</div></div>
+    <div class="stats"><div class="pill">⚡ <b id="xp">0</b> XP</div><div class="pill">🔥 <b id="streak">1</b></div></div>
+  </header>
+
+  <main>
+    <section class="screen active" id="home">
+      <div class="hero">
+        <div class="eyebrow">Your mind. Your move.</div>
+        <h1>Think you know<br>what you'd do?</h1>
+        <p>Make impossible choices, crack clever cases, and test your brain. Your next twist starts here.</p>
+        <button class="primary" id="dailyStart">PLAY TODAY'S TWIST&nbsp; →</button>
+      </div>
+      <div class="section-title"><h2>Choose your mode</h2><small>Pick your challenge</small></div>
+      <div class="modes">
+        <button class="mode choice-mode" data-mode="choices"><span class="icon">🔥</span><span class="mode-copy"><strong>Twisted Choices</strong><span>Impossible decisions. Unexpected perspectives.</span></span><span class="arrow">›</span></button>
+        <button class="mode case-mode" data-mode="case"><span class="icon">🕵️</span><span class="mode-copy"><strong>Case Closed</strong><span>Read the clues. Find the contradiction.</span></span><span class="arrow">›</span></button>
+        <button class="mode mind-mode" data-mode="mind"><span class="icon">⚡</span><span class="mode-copy"><strong>Mind Games</strong><span>Quick riddles and logic challenges.</span></span><span class="arrow">›</span></button>
+      </div>
+      <div class="section-title"><h2>Today's challenge</h2><small>New every day</small></div>
+      <div class="daily"><div class="daily-icon">🌀</div><div style="flex:1"><strong>One choice. Two futures.</strong><p>Can you live with the twist?</p></div><button id="dailyOpen">Play now</button></div>
+      <div class="ad-slot" aria-label="Advertisement placeholder">ADVERTISEMENT SPACE · TEST BUILD</div>
+    </section>
+
+    <section class="screen" id="game">
+      <button class="back" id="backHome">← Home</button>
+      <div id="gameContent"></div>
+    </section>
+
+    <section class="screen" id="profile">
+      <div class="section-title"><h2>Your progress</h2><small>Saved on this device</small></div>
+      <div class="mini-grid"><div class="mini"><b id="statXP">0</b><span>Total XP</span></div><div class="mini"><b id="statPlayed">0</b><span>Challenges played</span></div><div class="mini"><b id="statSolved">0</b><span>Correct answers</span></div><div class="mini"><b id="statLevel">1</b><span>Player level</span></div></div>
+      <div class="game-card" style="margin-top:14px"><h2>Keep your streak alive 🔥</h2><p>Come back for a new daily challenge and keep sharpening your mind.</p><button class="primary" id="profilePlay">Play a challenge</button></div>
+      <div class="ad-slot">ADVERTISEMENT SPACE · TEST BUILD</div>
+    </section>
+
+    <section class="screen" id="settings">
+      <div class="section-title"><h2>Settings</h2></div>
+      <div class="game-card"><h2>Game preferences</h2><p>TWISTED is an early prototype. Your progress is stored locally on this device when browser storage is available.</p><button class="choice" id="soundToggle">🔊 Sound effects: off</button><button class="choice" id="resetProgress" style="margin-top:10px">Reset local progress</button><p class="muted" style="font-size:.78rem">No account is needed. Online leaderboards and real advertisements are not enabled in this prototype.</p></div>
+    </section>
+  </main>
+
+  <nav class="bottom" aria-label="Main navigation">
+    <button class="active" data-screen="home">⌂<br>Home</button>
+    <button data-mode="choices">🔥<br>Play</button>
+    <button data-screen="profile">◈<br>Progress</button>
+    <button data-screen="settings">⚙<br>Settings</button>
+  </nav>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const choiceDeck = [
+    {q:"A stranger offers you GH₵1 million, but you must give up your smartphone for five years. What do you choose?",a:["Take the money. Five years will fly by.","Keep my phone. I'm not ready for that life."],why:"There is no universal right answer. One choice prioritises financial freedom; the other protects connection, convenience, and everyday life.",tag:"MONEY & LIFE"},
+    {q:"You can know one thing about your future. Which do you choose?",a:["The biggest opportunity I'll ever get.","The biggest mistake I should avoid."],why:"Opportunity gives you something to pursue. Knowing a mistake might help you avoid regret—but could also make you afraid to take risks.",tag:"FUTURE FILES"},
+    {q:"Your closest friend wins a competition after accidentally receiving a question early. Nobody knows. What do you do?",a:["Tell the organisers what happened.","Talk to my friend privately first."],why:"Honesty matters, but so does understanding the circumstances. Consider fairness to everyone who competed and the chance to address it responsibly.",tag:"LOYALTY TEST"},
+    {q:"Pick one extraordinary ability for 24 hours.",a:["Read minds—but hear every thought nearby.","See 10 minutes into the future—but only once per hour."],why:"Mind-reading offers information but may overwhelm you. A glimpse of the future is limited, but could help you make a critical decision.",tag:"IMPOSSIBLE CHOICES"},
+    {q:"You find a wallet with cash and an ID, but you're already late for something important.",a:["Take a moment to contact the owner.","Hand it to the nearest responsible authority and go."],why:"Both options try to return the wallet rather than keep it. The best practical choice depends on where you are and what safe options are available.",tag:"REAL LIFE"},
+    {q:"You can erase one thing from the internet forever.",a:["Every embarrassing photo of me.","Every lie ever told about someone."],why:"One choice protects personal privacy; the other could prevent real harm. Think about the scale of the consequences.",tag:"BIG QUESTIONS"}
+  ];
+  const cases = [
+    {title:"The Missing Million",story:"A business owner discovers that an envelope of money has vanished from his office. Three people entered the office that morning. Based on the statements below, who is contradicting the evidence?",clues:["Ama: “I entered to drop a file, and the envelope was already on the desk.”","Kojo: “I never entered the office today.”","Esi: “I saw Kojo come out of the office at 9:10 a.m.”"],q:"Which statement is directly contradicted by another person's account?",a:["Ama's statement","Kojo's statement","Esi's statement"],correct:1,why:"Esi says she saw Kojo come out of the office, while Kojo claims he never entered it. That contradiction makes Kojo's statement the one to investigate. It does not, by itself, prove he took the money."},
+    {title:"The Rainy-Day Alibi",story:"A laptop disappears from a classroom during lunch. Three people give statements. One detail doesn't fit.",clues:["Nana: “I stayed inside the library the whole lunch break.”","Yaw: “I saw Nana outside the classroom block in the heavy rain.”","Abena: “The playground was completely dry all afternoon.”"],q:"Which two statements most clearly conflict?",a:["Nana and Yaw","Yaw and Abena","Nana and Abena"],correct:0,why:"Nana says they stayed inside the library, while Yaw claims to have seen Nana outside. Their accounts conflict. The clues don't establish who took the laptop."}
+  ];
+  const mindDeck = [
+    {q:"What comes next in the sequence? 2, 6, 12, 20, 30, …",a:["36","40","42","44"],correct:2,why:"The differences are +4, +6, +8, +10, so the next difference is +12. 30 + 12 = 42."},
+    {q:"You have 3 apples and take away 2. How many apples do you have?",a:["1","2","3","5"],correct:1,why:"You took away 2 apples, so you have the 2 apples you took."},
+    {q:"Which word does not belong?",a:["Triangle","Square","Circle","Blue"],correct:3,why:"Triangle, square, and circle are shapes. Blue is a colour."},
+    {q:"A clock shows 3:15. What is the smaller angle between the hands?",a:["0°","7.5°","15°","30°"],correct:1,why:"At 3:15, the minute hand is at 90°. The hour hand is at 97.5°. The difference is 7.5°."},
+    {q:"If all Zorbs are Mips, and all Mips are Lums, which statement must be true?",a:["All Lums are Zorbs","All Zorbs are Lums","No Zorbs are Lums","Some Mips are not Lums"],correct:1,why:"If every Zorb is a Mip and every Mip is a Lum, then every Zorb must also be a Lum."}
+  ];
+  const defaultState = {xp:0,played:0,solved:0,streak:1,lastDay:"",sound:false,seen:[]};
+  let state = {...defaultState};
+  try { state = {...defaultState,...JSON.parse(localStorage.getItem("twisted-state-v1")||"{}")}; } catch(e) {}
+  let currentMode="choices", currentItem=null, answered=false, order=0;
+  function save(){try{localStorage.setItem("twisted-state-v1",JSON.stringify(state));}catch(e){} updateStats();}
+  function updateStats(){ $("#xp").textContent=state.xp;$("#streak").textContent=state.streak;$("#statXP").textContent=state.xp;$("#statPlayed").textContent=state.played;$("#statSolved").textContent=state.solved;$("#statLevel").textContent=Math.floor(state.xp/100)+1;}
+  function show(id){$$(".screen").forEach(s=>s.classList.toggle("active",s.id===id));$$(".bottom button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));window.scrollTo({top:0,behavior:"smooth"});}
+  function toast(msg){const t=$("#toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2300);}
+  function pick(arr){return arr[(order++)%arr.length];}
+  function start(mode){currentMode=mode;answered=false;show("game");const root=$("#gameContent");root.innerHTML="";
+    if(mode==="choices"){
+      currentItem=pick(choiceDeck);root.innerHTML=`<div class="game-card"><div class="game-label">${currentItem.tag} · TWISTED CHOICES</div><h2>${currentItem.q}</h2><p>There is no timer. Think it through, then make your move.</p><div class="choices">${currentItem.a.map((a,i)=>`<button class="choice" data-answer="${i}"><span class="letter">${String.fromCharCode(65+i)}</span>${a}</button>`).join("")}</div><div id="feedback"></div></div>`;
+      $$(".choice[data-answer]").forEach(b=>b.addEventListener("click",()=>answer(Number(b.dataset.answer),null)));
+    }else if(mode==="case"){
+      currentItem=pick(cases);root.innerHTML=`<div class="game-card"><div class="game-label">CASE FILE · ${String(order).padStart(3,"0")}</div><h2>🕵️ ${currentItem.title}</h2><p>${currentItem.story}</p><strong>Evidence & statements</strong><ul class="case-clues">${currentItem.clues.map(c=>`<li>${c}</li>`).join("")}</ul><p><strong>${currentItem.q}</strong></p><div class="choices">${currentItem.a.map((a,i)=>`<button class="choice" data-answer="${i}"><span class="letter">${String.fromCharCode(65+i)}</span>${a}</button>`).join("")}</div><div id="feedback"></div></div>`;
+      $$(".choice[data-answer]").forEach(b=>b.addEventListener("click",()=>answer(Number(b.dataset.answer),currentItem.correct)));
+    }else{
+      currentItem=pick(mindDeck);root.innerHTML=`<div class="game-card"><div class="game-label">BRAIN SPARK · MIND GAMES</div><h2>⚡ ${currentItem.q}</h2><div class="choices">${currentItem.a.map((a,i)=>`<button class="choice" data-answer="${i}"><span class="letter">${String.fromCharCode(65+i)}</span>${a}</button>`).join("")}</div><div id="feedback"></div></div>`;
+      $$(".choice[data-answer]").forEach(b=>b.addEventListener("click",()=>answer(Number(b.dataset.answer),currentItem.correct)));
+    }
+  }
+  function answer(n,correct){
+    if(answered)return;answered=true;state.played++;let isCorrect=correct===null||n===correct;if(isCorrect){state.xp+=10;state.solved++}else state.xp+=3;save();
+    $$(".choice[data-answer]").forEach((b,i)=>{b.disabled=true;b.classList.toggle("selected",i===n);});
+    const feedback=$("#feedback");
+    if(currentMode==="choices"){feedback.innerHTML=`<div class="feedback"><strong>🌀 The twist</strong>${currentItem.why}<br><br><span class="muted">You earned 10 XP for making your choice.</span></div>`}
+    else{feedback.innerHTML=`<div class="feedback"><strong>${isCorrect?"✅ Case cracked!":"🧩 Not quite — keep investigating."}</strong>${currentItem.why}<br><br><span class="muted">+${isCorrect?10:3} XP</span></div>`}
+    feedback.insertAdjacentHTML("beforeend",`<button class="primary next" id="nextChallenge">NEXT CHALLENGE →</button>`);
+    $("#nextChallenge").addEventListener("click",()=>start(currentMode));
+  }
+  $$("[data-mode]").forEach(b=>b.addEventListener("click",()=>start(b.dataset.mode)));
+  $$("[data-screen]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.screen)));
+  $("#dailyStart").addEventListener("click",()=>start("choices"));$("#dailyOpen").addEventListener("click",()=>start("choices"));$("#backHome").addEventListener("click",()=>show("home"));$("#profilePlay").addEventListener("click",()=>start("mind"));
+  $("#soundToggle").addEventListener("click",()=>{state.sound=!state.sound;$("#soundToggle").textContent=(state.sound?"🔊":"🔇")+" Sound effects: "+(state.sound?"on":"off");save();toast("Preference saved.");});
+  $("#resetProgress").addEventListener("click",()=>{if(confirm("Reset all TWISTED progress saved on this device?")){state={...defaultState};save();toast("Progress reset.");}});
+  updateStats();$("#soundToggle").textContent=(state.sound?"🔊":"🔇")+" Sound effects: "+(state.sound?"on":"off");
+  if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+})();
+</script>
+</body>
+</html>
